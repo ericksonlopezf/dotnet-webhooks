@@ -1,0 +1,32 @@
+<!-- Copyright © Erickson Lopez. MIT License. -->
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>net8.0;net9.0;net10.0</TargetFrameworks>
+    <AssemblyName>EricksonLopez.Webhooks.Redis</AssemblyName>
+    <RootNamespace>EricksonLopez.Webhooks.Redis</RootNamespace>
+    <PackageId>EricksonLopez.Webhooks.Redis</PackageId>
+    <Description>Redis-backed distributed replay detector and persistent dead-letter queue (DLQ) provider for EricksonLopez.Webhooks.</Description>
+    <PackageTags>$(CommonPackageTags);webhook;redis;distributed;anti-replay;dead-letter-queue;native-aot</PackageTags>
+    <IsPackable>true</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\README.md" Pack="true" PackagePath="\" />
+    <None Include="..\..\assets\icon.png" Pack="true" PackagePath="\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="StackExchange.Redis" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\EricksonLopez.Webhooks\EricksonLopez.Webhooks.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="EricksonLopez.Webhooks.Redis.Tests" />
+    <InternalsVisibleTo Include="DynamicProxyGenAssembly2" />
+  </ItemGroup>
+
+</Project>

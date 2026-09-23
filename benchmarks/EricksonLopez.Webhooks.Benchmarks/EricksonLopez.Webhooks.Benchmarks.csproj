@@ -1,0 +1,20 @@
+<!-- Copyright © Erickson Lopez. MIT License. -->
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFrameworks>net10.0;net9.0;net8.0</TargetFrameworks>
+    <Description>Performance benchmarks and memory allocation budgets for EricksonLopez.Webhooks.</Description>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\EricksonLopez.Webhooks\EricksonLopez.Webhooks.csproj" />
+    <ProjectReference Include="..\..\src\EricksonLopez.Webhooks.AspNetCore\EricksonLopez.Webhooks.AspNetCore.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="BenchmarkDotNet" />
+  </ItemGroup>
+
+</Project>

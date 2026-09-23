@@ -1,0 +1,23 @@
+# Copyright © Erickson Lopez. MIT License.
+# Global repository code owners
+
+*       @ericksonlopezf
+
+# Build & CI/CD infrastructure
+/.github/workflows/         @ericksonlopezf
+/Directory.Build.props      @ericksonlopezf
+/Directory.Packages.props   @ericksonlopezf
+/scripts/                   @ericksonlopezf
+
+# Source packages
+/src/EricksonLopez.Webhooks/               @ericksonlopezf
+/src/EricksonLopez.Webhooks.AspNetCore/    @ericksonlopezf
+/src/EricksonLopez.Webhooks.Redis/         @ericksonlopezf
+
+# Test suites & benchmarks
+/tests/                     @ericksonlopezf
+/benchmarks/                @ericksonlopezf
+/samples/                   @ericksonlopezf
+
+# Technical documentation & ADRs
+/docs/                      @ericksonlopezf

@@ -1,0 +1,70 @@
+# Copyright © Erickson Lopez. MIT License.
+name: Nightly Deep Audit & Ecosystem Validation
+
+on:
+  schedule:
+    - cron: '0 3 * * *' # Every night at 03:00 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  multi-os-validation:
+    name: Cross-Platform Matrix (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 25
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - ubuntu-latest
+          - windows-latest
+          - macos-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+      - name: Setup .NET SDKs
+        uses: actions/setup-dotnet@67a3573c9a986a3f9c594539f4ab511d57bb3ce9 # v4.3.1
+        with:
+          dotnet-version: |
+            8.0.x
+            9.0.x
+            10.0.x
+
+      - name: Restore Dependencies
+        run: dotnet restore EricksonLopez.Webhooks.slnx
+
+      - name: Build All Projects
+        run: dotnet build EricksonLopez.Webhooks.slnx -c Release --no-restore
+
+      - name: Run Unit Tests
+        run: dotnet test EricksonLopez.Webhooks.slnx -c Release --no-build
+
+  native-aot-smoke-gate:
+    name: Native AOT Compilation Guard
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+      - name: Setup .NET SDK
+        uses: actions/setup-dotnet@67a3573c9a986a3f9c594539f4ab511d57bb3ce9 # v4.3.1
+        with:
+          dotnet-version: 10.0.x
+
+      - name: Restore Dependencies
+        run: dotnet restore EricksonLopez.Webhooks.slnx
+
+      - name: Verify Native AOT Publish of Benchmarks Harness
+        run: >
+          dotnet publish benchmarks/EricksonLopez.Webhooks.Benchmarks/EricksonLopez.Webhooks.Benchmarks.csproj
+          -c Release
+          -r linux-x64
+          --self-contained
+          -p:PublishAot=true
+          -p:TreatWarningsAsErrors=true

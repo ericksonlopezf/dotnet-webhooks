@@ -1,0 +1,19 @@
+<!-- Copyright © Erickson Lopez. MIT License. -->
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/EricksonLopez.Webhooks/EricksonLopez.Webhooks.csproj" />
+    <Project Path="src/EricksonLopez.Webhooks.AspNetCore/EricksonLopez.Webhooks.AspNetCore.csproj" />
+    <Project Path="src/EricksonLopez.Webhooks.Redis/EricksonLopez.Webhooks.Redis.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/EricksonLopez.Webhooks.Tests/EricksonLopez.Webhooks.Tests.csproj" />
+    <Project Path="tests/EricksonLopez.Webhooks.AspNetCore.Tests/EricksonLopez.Webhooks.AspNetCore.Tests.csproj" />
+    <Project Path="tests/EricksonLopez.Webhooks.Redis.Tests/EricksonLopez.Webhooks.Redis.Tests.csproj" />
+  </Folder>
+  <Folder Name="/benchmarks/">
+    <Project Path="benchmarks/EricksonLopez.Webhooks.Benchmarks/EricksonLopez.Webhooks.Benchmarks.csproj" />
+  </Folder>
+  <Folder Name="/samples/">
+    <Project Path="samples/EricksonLopez.Webhooks.Sample/EricksonLopez.Webhooks.Sample.csproj" />
+  </Folder>
+</Solution>

@@ -1,0 +1,35 @@
+﻿{
+    "stryker-config":  {
+                           "project":  "EricksonLopez.Webhooks.csproj",
+                           "test-projects":  [
+                                                 "EricksonLopez.Webhooks.Tests.csproj"
+                                             ],
+                           "mutate":  [
+                                          "**/*.cs",
+                                          "!bin/**",
+                                          "!obj/**",
+                                          "!**/*.g.cs",
+                                          "!**/*.AssemblyInfo.cs"
+                                      ],
+                           "thresholds":  {
+                                              "high":  100,
+                                              "low":  98,
+                                              "break":  95
+                                          },
+                           "reporters":  [
+                                             "html",
+                                             "json",
+                                             "cleartext",
+                                             "progress"
+                                         ],
+                           "ignore-methods":  [
+                                                  "ConfigureAwait",
+                                                  "Dispose",
+                                                  "*SetTag*",
+                                                  "*SetStatus*",
+                                                  "*Record*",
+                                                  "*Log*"
+                                              ],
+                           "concurrency":  2
+                       }
+}

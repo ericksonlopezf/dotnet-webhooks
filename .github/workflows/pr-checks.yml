@@ -1,0 +1,88 @@
+# Copyright © Erickson Lopez. MIT License.
+name: PR Fast Checks & Compliance
+
+on:
+  pull_request:
+    branches:
+      - main
+      - 'release/**'
+    paths-ignore:
+      - '**.png'
+      - '**.svg'
+
+permissions:
+  contents: read
+
+jobs:
+  compliance-and-build:
+    name: Build, Fast Checks & Unit Tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+      - name: Setup .NET SDKs
+        uses: actions/setup-dotnet@67a3573c9a986a3f9c594539f4ab511d57bb3ce9 # v4.3.1
+        with:
+          dotnet-version: |
+            8.0.x
+            9.0.x
+            10.0.x
+
+      - name: Restore Dependencies
+        run: dotnet restore EricksonLopez.Webhooks.slnx
+
+      - name: Validate Documentation Links
+        shell: pwsh
+        run: ./scripts/validate-links.ps1
+
+      - name: Validate Repository Compliance & Standards
+        shell: pwsh
+        run: ./scripts/validate-compliance.ps1
+
+      - name: Verify Code Formatting
+        run: dotnet format --verify-no-changes --verbosity diagnostic
+
+      - name: Compile Solution (TreatWarningsAsErrors)
+        run: dotnet build EricksonLopez.Webhooks.slnx -c Release --no-restore
+
+      - name: Execute Unit Tests
+        run: dotnet test EricksonLopez.Webhooks.slnx -c Release --no-build --verbosity normal
+
+      - name: Validate NuGet Packaging
+        run: dotnet pack EricksonLopez.Webhooks.slnx -c Release --no-build
+
+  targeted-mutation-gate:
+    name: Targeted Stryker Mutation Gate
+    needs: compliance-and-build
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+      - name: Setup .NET SDKs
+        uses: actions/setup-dotnet@67a3573c9a986a3f9c594539f4ab511d57bb3ce9 # v4.3.1
+        with:
+          dotnet-version: |
+            8.0.x
+            9.0.x
+            10.0.x
+
+      - name: Install Stryker Global Tool
+        run: dotnet tool install -g dotnet-stryker
+
+      - name: Cache Stryker Baseline
+        uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4.3.0
+        with:
+          path: ~/.stryker
+          key: ${{ runner.os }}-stryker-${{ github.ref_name }}-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-stryker-${{ github.ref_name }}-
+            ${{ runner.os }}-stryker-main-
+
+      - name: Run Targeted Mutation on Core Engine
+        run: dotnet stryker --config-file stryker-config.json --concurrency 2 --break-at 95
