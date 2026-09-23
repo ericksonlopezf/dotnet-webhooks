@@ -6,7 +6,7 @@
   <ItemGroup>
         <PackageVersion Include="Microsoft.SourceLink.GitHub" Version="8.0.0" />
 <!-- EricksonLopez Ecosystem -->
-    <PackageVersion Include="EricksonLopez.Result" Version="2.0.0" />
+    <PackageVersion Include="EricksonLopez.Result" Version="3.0.0" />
     <PackageVersion Include="EricksonLopez.Security.Network" Version="1.1.0" />
     <!-- Microsoft Extensions & OpenTelemetry -->
     <PackageVersion Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="10.0.11" />
