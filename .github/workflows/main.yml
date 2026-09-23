@@ -1,0 +1,107 @@
+# Copyright © Erickson Lopez. MIT License.
+name: Main Continuous Integration & Quality Gates
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  build-and-test:
+    name: Full Build & Multi-TFM Testing
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          fetch-depth: 0
+
+      - name: Setup Java (for SonarScanner)
+        uses: actions/setup-java@cf277c60eb25467037889841efdb72551f06f6c3 # v4.9.1
+        with:
+          java-version: '17'
+          distribution: 'zulu'
+
+      - name: Install SonarScanner
+        run: dotnet tool install --global dotnet-sonarscanner
+
+      - name: Setup .NET SDKs
+        uses: actions/setup-dotnet@67a3573c9a986a3f9c594539f4ab511d57bb3ce9 # v4.3.1
+        with:
+          dotnet-version: |
+            8.0.x
+            9.0.x
+            10.0.x
+
+      - name: Restore Dependencies
+        run: dotnet restore EricksonLopez.Webhooks.slnx
+
+      - name: Validate Documentation Links
+        shell: pwsh
+        run: ./scripts/validate-links.ps1
+
+      - name: Validate Repository Compliance & Standards
+        shell: pwsh
+        run: ./scripts/validate-compliance.ps1
+
+      - name: Begin Sonar Analysis
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        if: env.SONAR_TOKEN != ''
+        run: |
+          dotnet sonarscanner begin /k:"ericksonlopezf_${{ github.event.repository.name }}" \
+            /o:"ericksonlopezf" \
+            /v:"1.0.0" \
+            /d:sonar.token="$SONAR_TOKEN" \
+            /d:sonar.host.url="https://sonarcloud.io" \
+            /d:sonar.cs.opencover.reportsPaths="**/coverage.opencover.xml" \
+            /d:sonar.exclusions="samples/**,benchmarks/**,scripts/**,**/bin/**,**/obj/**,**/*.js" \
+            /d:sonar.test.exclusions="scripts/**,**/*.js" \
+            /d:sonar.coverage.exclusions="tests/**,samples/**,benchmarks/**,**/*Tests.cs,**/*Test*.cs,**/tests/**,**/benchmarks/**,**/samples/**,**/bin/**,**/obj/**"
+
+      - name: Compile Solution (Release Mode)
+        run: dotnet build EricksonLopez.Webhooks.slnx -c Release --no-restore
+
+      - name: Run Tests with Code Coverage (Coverlet)
+        run: >
+          dotnet test EricksonLopez.Webhooks.slnx -c Release --no-build
+          --settings coverlet.runsettings
+          --collect:"XPlat Code Coverage"
+          --results-directory ./TestResults
+
+      - name: End Sonar Analysis
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        if: always() && env.SONAR_TOKEN != ''
+        run: dotnet sonarscanner end /d:sonar.token="$SONAR_TOKEN"
+
+      - name: Upload Test Coverage Artifacts
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: code-coverage-reports
+          path: ./TestResults/**/coverage.cobertura.xml
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@0fb7174895f61a3b6b78fc075e0cd60383518dac # v5.5.5
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: "./TestResults/**/coverage.cobertura.xml"
+          fail_ci_if_error: false
+          flags: unittests
+          name: codecov-webhooks
+
+      - name: Build NuGet Packages
+        run: dotnet pack EricksonLopez.Webhooks.slnx -c Release --no-build -o ./artifacts
+
+      - name: Upload Package Artifacts
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: nuget-packages
+          path: ./artifacts/*.nupkg

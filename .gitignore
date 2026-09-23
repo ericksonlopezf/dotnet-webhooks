@@ -1,0 +1,147 @@
+# ==============================================================================
+# .NET Build & Compilation Artifacts
+# ==============================================================================
+[Bb]in/
+[Oo]bj/
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+[Bb]uild/
+bld/
+[Ll]og/
+[Ll]ogs/
+*.binlog
+*.log
+
+# ==============================================================================
+# NuGet Packages & Cache
+# ==============================================================================
+nupkgs/
+*.nupkg
+*.snupkg
+packages/
+!**/packages/build/
+!local-packages/
+!local-packages/*.nupkg
+!local-packages/*.snupkg
+project.lock.json
+project.assets.json
+
+# ==============================================================================
+# IDEs & Editors
+# ==============================================================================
+# Visual Studio
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+*.userprefs
+*.ide
+
+# Visual Studio Code (Keep project settings, ignore user workspace state)
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.code-workspace
+
+# JetBrains Rider / ReSharper
+.idea/
+*.DotSettings.user
+_ReSharper*/
+
+# Ionide / F#
+.ionide/
+
+# ==============================================================================
+# Testing, Code Coverage & Benchmarks
+# ==============================================================================
+# Test Results & Coverage
+[Tt]est[Rr]esults*/
+[Cc]overage[Rr]eport*/
+coverage-report/
+coveragereport/
+*.trx
+*.coverage
+*.coveragexml
+coverage*.json
+coverage*.xml
+coverage*.info
+*.cobertura.xml
+*.opencover.xml
+coverage.*/
+**/coverage.*.xml
+**/coverage.*.cobertura.xml
+**/coverage.*.opencover.xml
+
+# BenchmarkDotNet & Performance Artifacts
+BenchmarkDotNet.Artifacts/
+**/BenchmarkDotNet.Artifacts/
+benchmarks/results/*.log
+
+# Stryker & Mutation Testing
+.stryker-tmp/
+StrykerOutput/
+**/StrykerOutput/
+
+# ==============================================================================
+# Secrets, Environment & Local Configuration
+# ==============================================================================
+appsettings.Development.json
+appsettings.Local.json
+*.local.json
+secrets.json
+.env
+.env.*
+!.env.example
+
+# ==============================================================================
+# Certificates & Security
+# ==============================================================================
+*.pfx
+*.p12
+*.key
+# *.snk (Allowed for Open Source projects signing)
+!public.snk
+
+# ==============================================================================
+# Publish & Native AOT Artifacts
+# ==============================================================================
+publish/
+aot-output/
+*.pubxml.user
+
+# ==============================================================================
+# Scratch, Tooling & Local Temporary Files
+# ==============================================================================
+/scratch/
+*.bak
+*.tmp
+*~
+*.swp
+*.swo
+
+# Node.js (Local scripts & tooling)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# ==============================================================================
+# Operating System Files
+# ==============================================================================
+# Windows
+Thumbs.db
+Desktop.ini
+ehthumbs.db
+$RECYCLE.BIN/
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*

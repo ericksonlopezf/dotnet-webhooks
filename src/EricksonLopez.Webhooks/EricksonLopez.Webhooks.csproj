@@ -1,0 +1,31 @@
+<!-- Copyright © Erickson Lopez. MIT License. -->
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>net8.0;net9.0;net10.0</TargetFrameworks>
+    <AssemblyName>EricksonLopez.Webhooks</AssemblyName>
+    <RootNamespace>EricksonLopez.Webhooks</RootNamespace>
+    <PackageId>EricksonLopez.Webhooks</PackageId>
+    <Description>Enterprise-grade webhook delivery engine for .NET. Features HMAC-SHA256 request signing, anti-replay timestamps, exponential backoff with jitter, dead-letter queue (DLQ) support, and Native AOT compatibility.</Description>
+    <PackageTags>$(CommonPackageTags);webhook;webhook-sender;outbound;event-driven;hmac-sha256;ssrf-protection;resilience;retry;dead-letter-queue;standard-webhooks;opentelemetry;native-aot</PackageTags>
+    <IsPackable>true</IsPackable>
+  </PropertyGroup>
+
+
+  <ItemGroup>
+    <PackageReference Include="EricksonLopez.Result" />
+    <PackageReference Include="EricksonLopez.Security.Network" />
+    <PackageReference Include="Microsoft.Extensions.Http.Resilience" />
+    <PackageReference Include="Microsoft.Extensions.Options" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" />
+    <PackageReference Include="Microsoft.Extensions.Http" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="EricksonLopez.Webhooks.Tests" />
+    <InternalsVisibleTo Include="EricksonLopez.Webhooks.Benchmarks" />
+    <InternalsVisibleTo Include="DynamicProxyGenAssembly2" />
+  </ItemGroup>
+
+</Project>
