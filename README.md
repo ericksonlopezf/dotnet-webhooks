@@ -5,7 +5,7 @@ Production-ready webhook engine for .NET 8/9/10: resilient outbound delivery wit
 [![CI](https://img.shields.io/github/actions/workflow/status/ericksonlopezf/dotnet-webhooks/main.yml?branch=main&style=for-the-badge&logo=githubactions&logoColor=white&label=CI)](https://github.com/ericksonlopezf/dotnet-webhooks/actions/workflows/main.yml)
 [![Coverage](https://img.shields.io/codecov/c/github/ericksonlopezf/dotnet-webhooks?style=for-the-badge&logo=codecov&logoColor=white)](https://codecov.io/gh/ericksonlopezf/dotnet-webhooks)
 [![Quality Gate](https://img.shields.io/sonar/quality_gate/ericksonlopezf_dotnet-webhooks?server=https%3A%2F%2Fsonarcloud.io&style=for-the-badge&logo=sonarcloud&logoColor=white)](https://sonarcloud.io/summary/new_code?id=ericksonlopezf_dotnet-webhooks)
-[![Mutation Score](https://img.shields.io/badge/Mutation_Score-95.68%25-brightgreen?style=for-the-badge&logo=stryker&logoColor=white)](https://github.com/ericksonlopezf/dotnet-webhooks/blob/main/docs/testing-roadmap.md)
+[![Mutation Score](https://img.shields.io/badge/Mutation_Score-100%25-brightgreen?style=for-the-badge&logo=stryker&logoColor=white)](https://github.com/ericksonlopezf/dotnet-webhooks/blob/main/docs/testing-roadmap.md)
 [![NuGet](https://img.shields.io/nuget/v/EricksonLopez.Webhooks?style=for-the-badge&logo=nuget&logoColor=white&color=512BD4)](https://www.nuget.org/packages/EricksonLopez.Webhooks)
 [![NuGet Downloads](https://img.shields.io/nuget/dt/EricksonLopez.Webhooks?style=for-the-badge&logo=nuget&logoColor=white&color=004880)](https://www.nuget.org/packages/EricksonLopez.Webhooks)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](https://github.com/ericksonlopezf/dotnet-webhooks/blob/main/LICENSE)
