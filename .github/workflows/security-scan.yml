@@ -44,7 +44,7 @@ jobs:
         run: dotnet build EricksonLopez.Webhooks.slnx -c Release
 
       - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@3ea06614dafe36dec890db3446326e0d40ce53d4 # v3.38.1
+        uses: github/codeql-action/analyze@24c54180a607b1449ed407dd24f251e4e9147c8d # v4.38.3
 
   dependency-audit:
     name: NuGet Dependency Vulnerability Audit
